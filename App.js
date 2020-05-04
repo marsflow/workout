@@ -7,7 +7,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import BottomTabNavigator from './navigation/BottomTabNavigator';
-import ExerciseScreen from './screens/ExerciseScreen';
+import ExerciseScreen from './screens/Exercise/ExerciseScreen';
+import ExerciseOverviewScreen from './screens/Exercise/ExerciseOverviewScreen';
 
 import useLinking from './navigation/useLinking';
 
@@ -54,7 +55,8 @@ export default function App(props) {
         <NavigationContainer ref={containerRef} initialState={initialNavigationState}>
           <Stack.Navigator>
             <Stack.Screen name="Root" component={BottomTabNavigator} />
-            <Stack.Screen name="Exercise" component={ExerciseScreen} />
+            <Stack.Screen name="ExerciseOverview" component={ExerciseOverviewScreen} options={{title: 'Exercise Overview'}} />
+            <Stack.Screen name="Exercise" component={ExerciseScreen} options={{headerShown: false}} />
           </Stack.Navigator>
         </NavigationContainer>
       </View>

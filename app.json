@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "workout",
+    "name": "Workout",
     "slug": "workout",
     "platforms": [
       "ios",
@@ -23,7 +23,17 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
-    }
+      "supportsTablet": true,
+      "infoPlist": {
+        "UIBackgroundModes": [
+          "audio"
+        ]
+      }
+    },
+    "android": {
+      "package": "com.marsflow.workout",
+      "versionCode": 1
+    },
+    "description": ""
   }
 }
