@@ -1,12 +1,83 @@
 import * as WebBrowser from 'expo-web-browser';
-import * as React from 'react';
-import { Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Image, Platform, 
+  Keyboard,
+  KeyboardAvoidingView,
+  ToastAndroid,
+  AsyncStorage,
+  TextInput, 
+  Button,  
+  StyleSheet, 
+  Text, 
+  TouchableOpacity, 
+  View 
+} from 'react-native';
+
 import { ScrollView } from 'react-native-gesture-handler';
 
 import { MonoText } from '../components/StyledText';
+import { getARMatrices } from 'expo/build/AR';
 
 
 export default function HomeScreen() {
+
+  const [restDuration, setRestDuration] = useState('0');
+
+
+  const saveRest = async () => {
+
+    try {
+
+      await AsyncStorage.setItem('restDuration', restDuration); 
+      ToastAndroid.show("Saved", ToastAndroid.SHORT);
+      Keyboard.dismiss();
+      console.log('dur saved', restDuration)
+
+    } catch(error) {
+
+      ToastAndroid.show("Some idiots make an error", ToastAndroid.SHORT);
+
+    }
+ 
+  }
+
+
+  const getRestDuration = async () => {
+
+    try {
+
+      let rest = await AsyncStorage.getItem('restDuration');
+      console.log('effect rest', rest)
+      if (rest !== null) {
+        console.log('get duration from file')
+        setRestDuration(rest)
+      } else {
+        console.log('get duration from file null, set default')
+        setRestDuration('120')
+      }
+          
+
+    } catch(error) {
+      
+      ToastAndroid.show("Default rest duration: 120 seconds", ToastAndroid.SHORT);
+      console.log('get duration from file error, set default')
+      setRestDuration('120')
+
+    }
+    
+  }
+
+  useEffect(() => {
+
+    getRestDuration()
+    
+
+   
+
+
+
+  }, [])
+
   return (
     <View style={styles.container}>
 
@@ -23,8 +94,25 @@ export default function HomeScreen() {
         </View>
 
         <View style={styles.getStartedContainer}>
-          <DevelopmentModeNotice />
 
+          <KeyboardAvoidingView 
+            behavior={Platform.OS == "ios" ? "padding" : "height"} 
+            style={{alignItems: 'center', marginBottom: 10}}
+          >
+
+            <Text style={styles.getStartedText}>Input your resting time (second):</Text>
+            
+            <TextInput
+              style={{ marginTop: 10, marginBottom: 10, height: 30, width: 100, textAlign: 'center', borderWidth: 1 }}
+              keyboardType="numeric"
+              onChangeText={(text) => setRestDuration(text)}
+              value={restDuration}
+            />
+
+            <Button title="Save" onPress={() => saveRest()} color="blue" />
+
+          </KeyboardAvoidingView>
+          
           <Text style={styles.getStartedText}>Open up the code for this screen:</Text>
 
           <View style={[styles.codeHighlightContainer, styles.homeScreenFilename]}>
@@ -58,32 +146,8 @@ HomeScreen.navigationOptions = {
   header: null,
 };
 
-function DevelopmentModeNotice() {
-  if (__DEV__) {
-    const learnMoreButton = (
-      <Text onPress={handleLearnMorePress} style={styles.helpLinkText}>
-        Learn more
-      </Text>
-    );
 
-    return (
-      <Text style={styles.developmentModeText}>
-        Development mode is enabled: your app will be slower but you can use useful development
-        tools. {learnMoreButton}
-      </Text>
-    );
-  } else {
-    return (
-      <Text style={styles.developmentModeText}>
-        You are not in development mode: your app will run at full speed.
-      </Text>
-    );
-  }
-}
 
-function handleLearnMorePress() {
-  WebBrowser.openBrowserAsync('https://docs.expo.io/versions/latest/workflow/development-mode/');
-}
 
 function handleHelpPress() {
   WebBrowser.openBrowserAsync(
