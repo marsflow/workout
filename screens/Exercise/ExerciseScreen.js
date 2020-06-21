@@ -32,7 +32,8 @@ const ExerciseScreen = ({route, navigation}) => {
 			count++
 			moves.push({
 				no: count,
-				name: `${exercises[i].name}: Set ${j+1} - (${exercises[i].reps}) Reps.`
+				name: `${exercises[i].name}`,
+				volume:  `Set ${j+1} - (${exercises[i].reps}) Reps.`
 			})
 		}
 
@@ -65,7 +66,7 @@ const ExerciseScreen = ({route, navigation}) => {
 			setTimer(timer - 1)
 
 		} catch (error) {
-				console.log(error)
+			console.log(error)
 		}
 
 	}, 1000)
@@ -149,14 +150,10 @@ const ExerciseScreen = ({route, navigation}) => {
 	} else {
 		return (
 			<View style={styles.container}>
-							
 				<Text>{(timer > 0) ? `Get ready for :` : `Go....`}</Text>
-
-
-				<Text>{move[pointer].name}</Text>
-
-				<Text><Text>{(timer > 0) ? timer : ``}</Text></Text>
-
+				<Text style={styles.exercise}>{move[pointer].name}</Text>
+				<Text style={styles.exercise}>{move[pointer].volume}</Text>
+				<Text style={styles.timer}>{(timer > 0) ? timer : `GO`}</Text>
 				<View style={{flexDirection: 'row'}}>
 					<TouchableOpacity 
 						disabled={pointer === 0}
@@ -194,7 +191,13 @@ const styles = StyleSheet.create({
         padding: 10,
         margin: 10,
         height: 40
-    }
+	},
+	exercise: {
+		fontSize: 20,
+	},
+	timer: {
+		fontSize: 100,
+	}
 })
 
 export default ExerciseScreen;

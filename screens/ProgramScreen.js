@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import { CalendarList } from 'react-native-calendars';
 
@@ -8,6 +8,8 @@ import Program from '../constants/Program';
 const ProgramScreen = ({navigation}) => 
 {
 
+	console.log(Program)
+	
 	return (
 		<View style={styles.container}>
 			<CalendarList
