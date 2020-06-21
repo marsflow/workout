@@ -4,22 +4,8 @@ import { Audio } from 'expo-av';
 import { useKeepAwake } from 'expo-keep-awake';
 
 
-// let restDuration = null;
-
-// const getData = async () => {
-// 	try {
-// 		restDuration = await AsyncStorage.getItem('restDuration');
-// 		console.log('bedebah');
-// 	} catch(error) {
-// 		console.log(error)
-// 	}
-// }
-
-// if (restDuration === null)
-// 	getData();
-
 const ExerciseScreen = ({route, navigation}) => {
-    
+	
 	useKeepAwake();
 
 	const { exercises } = route.params;
@@ -52,6 +38,7 @@ const ExerciseScreen = ({route, navigation}) => {
 
 
 	const timerStart = () => setInterval(async () => {
+
 
 		console.log(`restDuration: ${restDuration} - timer: ${timer}`)
 		
@@ -152,7 +139,7 @@ const ExerciseScreen = ({route, navigation}) => {
 			<View style={styles.container}>
 				<Text>{(timer > 0) ? `Get ready for :` : `Go....`}</Text>
 				<Text style={styles.exercise}>{move[pointer].name}</Text>
-				<Text style={styles.exercise}>{move[pointer].volume}</Text>
+				<Text style={styles.volume}>{move[pointer].volume}</Text>
 				<Text style={styles.timer}>{(timer > 0) ? timer : `GO`}</Text>
 				<View style={{flexDirection: 'row'}}>
 					<TouchableOpacity 
@@ -193,6 +180,10 @@ const styles = StyleSheet.create({
         height: 40
 	},
 	exercise: {
+		fontWeight: 'bold',
+		fontSize: 25,
+	},
+	volume: {
 		fontSize: 20,
 	},
 	timer: {

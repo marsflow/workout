@@ -10,7 +10,6 @@ const ExerciseOverviewScreen = ({route, navigation}) => {
 
 	const { day } = route.params
 
-	// const today = moment(new Date(), 'YYYY-MM-DD')
 	const today = day.dateString
 
 	let schedule = Object.keys(Program).filter((key) => key === today)

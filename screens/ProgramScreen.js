@@ -7,8 +7,6 @@ import Program from '../constants/Program';
 
 const ProgramScreen = ({navigation}) => 
 {
-
-	console.log(Program)
 	
 	return (
 		<View style={styles.container}>
